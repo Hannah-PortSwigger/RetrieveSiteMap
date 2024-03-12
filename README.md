@@ -5,7 +5,7 @@ Please note that extensions are written by third party users of Burp, and PortSw
 
 ---
 This extension will generate a TXT file immediately after a scan has finished, containing a list of all URLs found in the Site Map. The file will be stored on the Scanning Machine that performed the scan.
-Throughout the scan, this extension will save a copy of the site map every ten minutes.
+Throughout the scan, this extension will save the site map to the TXT file every ten minutes.
 
 The filename of the scan will be the start time of the scan, in the format `site-map-<TIME_STAMP>.txt`.
 
@@ -23,7 +23,7 @@ The filename of the scan will be the start time of the scan, in the format `site
 5. Retrieve your file from your Scanning Machine - it will be located according to the `folderPath` that is set. If in doubt, the file location and name will be output in the Scan log. This information will also be present in the Scan event log, if a backup has run.
 
 ### Additional configuration
-You may wish to adjust the time period that backups are made. You can do this by adjusting the initial delay and delay in `Extension.java`.
+You may wish to adjust the time period for when the site map data is saved. You can do this by adjusting the initial delay and delay in `Extension.java`.
 
 - To adjust the initial delay, edit line 34 in `Extension.java`.
 - To adjust the subsequent delay, edit line 35 in `Extension.java`.
@@ -41,7 +41,7 @@ If you have received an `AccessDeniedException`, then make sure that you have wr
 - Once Gradle is installed, run `./gradlew build` from the extension directory using the command line.
 - Make sure you are using the latest version of Gradle.
 
-If no changes to the code are required, a prebuilt JAR file is available under `build/libs/RetrieveSiteMap-2.0.jar`. It is preferable to compile your own JAR file.
+If no changes to the code are required, a prebuilt JAR file is available under Releases. It is preferable to compile your own JAR file.
 
 ## Changelog
 
