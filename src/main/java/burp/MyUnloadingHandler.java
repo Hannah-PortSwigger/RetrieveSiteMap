@@ -4,7 +4,6 @@ import burp.api.montoya.extension.ExtensionUnloadingHandler;
 import burp.api.montoya.http.message.HttpRequestResponse;
 import burp.api.montoya.sitemap.SiteMap;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -54,7 +53,7 @@ public class MyUnloadingHandler implements ExtensionUnloadingHandler
             Files.writeString(filePath, outputText);
             logger.logOutput("Site map saved to " + filePath);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             logger.logError("Failed to save site map", e);
         }

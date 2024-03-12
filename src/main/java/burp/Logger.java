@@ -19,7 +19,7 @@ public class Logger
         logging.raiseInfoEvent(message);
     }
 
-    public void logError(String message, IOException e)
+    public void logError(String message, Exception e)
     {
         logging.logToError(Extension.EXTENSION_NAME + " - " + message + ": " + e);
         logging.raiseErrorEvent(message + " - check scan log for further details.");
