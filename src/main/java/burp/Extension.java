@@ -26,8 +26,6 @@ public class Extension implements BurpExtension
         Path filePath = Path.of(folderPath + "site-map-" + extensionLoadedInstant.toString() + ".txt");
         FileSaver fileSaver = new FileSaver(logger, filePath);
 
-        montoyaApi.extension().registerUnloadingHandler(new MyUnloadingHandler(montoyaApi.siteMap(), fileSaver));
-
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleWithFixedDelay(
                 () -> fileSaver.writeToFile(montoyaApi.siteMap().requestResponses()),
@@ -35,6 +33,8 @@ public class Extension implements BurpExtension
                 10,
                 TimeUnit.MINUTES
         );
+
+        montoyaApi.extension().registerUnloadingHandler(new MyUnloadingHandler(montoyaApi.siteMap(), fileSaver, scheduledExecutorService));
 
         logger.logOutput("Loaded");
     }
