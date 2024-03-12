@@ -29,9 +29,9 @@ public class Extension implements BurpExtension
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleWithFixedDelay(
                 () -> fileSaver.writeToFile(montoyaApi.siteMap().requestResponses()),
-                10,
-                10,
-                TimeUnit.MINUTES
+                10,                 // Initial delay
+                10,                 // Fixed delay
+                TimeUnit.MINUTES    // Time units
         );
 
         montoyaApi.extension().registerUnloadingHandler(new MyUnloadingHandler(montoyaApi.siteMap(), fileSaver, scheduledExecutorService));
