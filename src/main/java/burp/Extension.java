@@ -3,7 +3,11 @@ package burp;
 import burp.api.montoya.BurpExtension;
 import burp.api.montoya.MontoyaApi;
 
+import java.nio.file.Path;
 import java.time.Instant;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Extension implements BurpExtension
 {
@@ -17,11 +21,21 @@ public class Extension implements BurpExtension
         Instant extensionLoadedInstant = Instant.now();
 
         montoyaApi.extension().setName(EXTENSION_NAME);
-
         Logger logger = new Logger(montoyaApi.logging());
 
-        logger.logOutput("Loaded");
+        Path filePath = Path.of(folderPath + "site-map-" + extensionLoadedInstant.toString() + ".txt");
+        FileSaver fileSaver = new FileSaver(logger, filePath);
 
-        montoyaApi.extension().registerUnloadingHandler(new MyUnloadingHandler(logger, montoyaApi.siteMap(), folderPath, extensionLoadedInstant));
+        montoyaApi.extension().registerUnloadingHandler(new MyUnloadingHandler(montoyaApi.siteMap(), fileSaver));
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleWithFixedDelay(
+                () -> fileSaver.writeToFile(montoyaApi.siteMap().requestResponses()),
+                10,
+                10,
+                TimeUnit.MINUTES
+        );
+
+        logger.logOutput("Loaded");
     }
 }
