@@ -7,7 +7,7 @@ Please note that extensions are written by third party users of Burp, and PortSw
 This extension will generate a TXT file immediately after a scan has finished, containing a list of all URLs found in the Site Map. The file will be stored on the Scanning Machine that performed the scan.
 Throughout the scan, this extension will save the site map to the TXT file every ten minutes.
 
-The filename of the scan will be the start time of the scan, in the format `site-map-<TIME_STAMP>.txt`.
+The filename of the scan will be the start time of the scan, in the format `site-map-yyyy-MM-dd-HH-mm.txt`.
 
 ## Limitations
 - File will be stored on Scanning Machine.
@@ -45,13 +45,16 @@ If no changes to the code are required, a prebuilt JAR file is available under R
 
 ## Changelog
 
+### v2.2 Update
+- Fix format of filename to prevent issues on Windows machines.
+
 ### v2.1 Update
 - Write the site map to the file system at specific intervals throughout the Scan.
 
 ### v2.0 Update
-- Rewritten in Montoya API
-- Improved file writing mechanism
+- Rewritten in Montoya API.
+- Improved file writing mechanism.
 
 ### v1.0 Initial release
-- Contains initial functionality
-- Written using the legacy Extender API
+- Contains initial functionality.
+- Written using the legacy Extender API.

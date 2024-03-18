@@ -5,13 +5,15 @@ import burp.api.montoya.MontoyaApi;
 
 import java.nio.file.Path;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Extension implements BurpExtension
 {
-    private final String folderPath = "/var/log/BurpSuiteEnterpriseEdition/";     // CHANGE ME!
+    private final String folderPath = "/var/log/BurpSuiteEnterpriseEdition";     // CHANGE ME!
 
     public final static String EXTENSION_NAME = "Retrieve Site Map";
 
@@ -23,7 +25,9 @@ public class Extension implements BurpExtension
         montoyaApi.extension().setName(EXTENSION_NAME);
         Logger logger = new Logger(montoyaApi.logging());
 
-        Path filePath = Path.of(folderPath + "site-map-" + extensionLoadedInstant.toString() + ".txt");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm").withZone(ZoneId.systemDefault());
+
+        Path filePath = Path.of(folderPath, "site-map-" + dateTimeFormatter.format(extensionLoadedInstant) + ".txt");
         FileSaver fileSaver = new FileSaver(logger, filePath);
 
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
